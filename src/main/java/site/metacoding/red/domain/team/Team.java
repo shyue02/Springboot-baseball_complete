@@ -12,4 +12,8 @@ public class Team {
 	private String name;
 	private Integer staduimId;
 	private Timestamp createdAt;
+	
+	// 엔티티가 아닌 필드
+	private Integer no; //db에 없는 값을 엔티티에 직접 만들기도 한다
+	private String stadiumName; //요청받을 때만 만들고, 응답받을 때는 안 만들어도 됨
 }
