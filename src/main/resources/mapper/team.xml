@@ -3,10 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="site.metacoding.red.domain.team.TeamDao">
-	<!-- StadiumDao 인터페이스를 부모로 잡고, 이 xml 파일이 자식이 되어서(상속해서) IoC컨테이너에 저장. 자바 클래스가 
+	<!-- TeamDao 인터페이스를 부모로 잡고, 이 xml 파일이 자식이 되어서(상속해서) IoC컨테이너에 저장. 자바 클래스가 
 		자동으로 생성된다 -->
 	<insert id="insert">
-		INSERT INTO stadium(NAME, created_at) VALUES(#{name}, NOW());
+		INSERT INTO team(NAME, stadium_id, created_at) VALUES(#{name}, #{stadiumId}, NOW())
 	</insert>
 
 	<select id="findAll"
@@ -14,7 +14,7 @@
 		SELECT t.id, s.name stadium_name, row_number() over(order BY t.id asc) as NO, t.NAME, t.created_at
 		FROM team t
 		INNER JOIN stadium s
-		ON t.stadium_id = s.id;
+		ON t.stadium_id = s.id
 	</select>
 
 	<select id="findById"
