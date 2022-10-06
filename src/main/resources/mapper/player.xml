@@ -6,7 +6,8 @@
 	<!-- TeamDao 인터페이스를 부모로 잡고, 이 xml 파일이 자식이 되어서(상속해서) IoC컨테이너에 저장. 자바 클래스가 
 		자동으로 생성된다 -->
 	<insert id="insert">
-
+		INSERT INTO player(name, position, team_id, is_outer, created_at) 
+		VALUES(#{name}, #{position}, #{teamId}, 0,NOW());
 	</insert>
 
 	<select id="findAll"

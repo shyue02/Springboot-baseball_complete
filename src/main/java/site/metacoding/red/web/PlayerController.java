@@ -11,20 +11,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 import site.metacoding.red.domain.player.Player;
-import site.metacoding.red.domain.stadium.Stadium;
 import site.metacoding.red.domain.team.Team;
 import site.metacoding.red.service.PlayerService;
-import site.metacoding.red.service.StadiumService;
 import site.metacoding.red.service.TeamService;
 import site.metacoding.red.web.dto.CMRespDto;
-import site.metacoding.red.web.dto.team.TeamInsertReqDto;
+import site.metacoding.red.web.dto.player.PlayerInsertReqDto;
 
 @RequiredArgsConstructor
 @Controller
 public class PlayerController {
 
 	private final PlayerService playerService;
-
+	private final TeamService teamService;
+	
 	@GetMapping("/player")
 	public String list(Model model) {
 		List<Player> playerList = playerService.팀목록보기();	//리스트 타입 -> 컬렉션
@@ -34,12 +33,14 @@ public class PlayerController {
 	
 	@GetMapping("/playerForm")
 	public String playerForm(Model model) {
-
+		List<Team> teamList = teamService.팀목록보기();
+		model.addAttribute("teamList", teamList);
 		return "player/saveForm";
 	}
 	
 	@PostMapping("/player")	//saveForm의 ajax를 받음 / dto로 받아야 하니까 dto 생성
-	public @ResponseBody CMRespDto<?> insert(){
+	public @ResponseBody CMRespDto<?> insert(@RequestBody PlayerInsertReqDto playerInsertReqDto){
+		playerService.선수등록(playerInsertReqDto);
 		return new CMRespDto<>(1, "선수등록성공", null);
 	}
 }
